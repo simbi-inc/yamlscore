@@ -7,8 +7,14 @@ module YamlScore
     end
 
     def evaluate(context)
-      # TODO: evaluate the hash
-      hash
+      hash.factors.each_with_object(hash) do |(_key, val)|
+        val.each_with_object(val) do |(_k, v)|
+          value = eval(v.value)
+          v.result = eval(v.formula)
+        end
+      end
+    rescue => e
+      puts e
     end
   end
 end

@@ -1,18 +1,22 @@
 default: &default
-  formula: "(quality.sum + feedback.sum + engagement.sum) * recency.product"
+  formula: "factors.quality.sum + factors.retention.sum"
   factors:
     additive:
       profile_influence:
         value: "context.user.profile.influence"
-        formula: "[ value * 0.01, 10].min"
-        tag: quality        
+        formula: "[value * 0.01, 10].min"
+        tag: quality
       recommendations:
         value: "context.user.recommendations.count"
         formula: "[value, 3].min"
         tag: retention
+      reviews:
+        value: "context.user.reviews.count"
+        formula: "[value, 3].min"
+        tag: retention
     temporal:
       last_seen:
-        value: "Time.now - user.last_login_at.ago"
+        value: "Time.now.to_i - context.user.last_login_at.ago"
         formula: "[1 - value * 0.005, 1 - value * 0.30 ].max"
         tag: recency
 v1: &v1
@@ -20,4 +24,11 @@ v1: &v1
 v2: &v2
   <<: *v1
   formula: "(quality.sum + feedback.sum - engagement.sum) * recency.product"
-
+broken_factors: &v1
+  <<: *default
+  factors:
+    additive:
+      profile_influence:
+        value: "context.user.profile1.influence"
+        formula: "[value * 0.01, 10].min"
+        tag: quality
