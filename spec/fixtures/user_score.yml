@@ -1,23 +1,91 @@
 default: &default
-  formula: "factors.quality.sum + factors.retention.sum"
+  formula: "(factors.quality.sum + factors.feedback.sum + factors.engagement.sum) * (1 - factors.recency.sum)"
   factors:
     additive:
-      profile_influence:
-        value: "context.user.profile.influence"
-        formula: "[value * 0.01, 10].min"
+      listing_strength:
+        value: "context.listing.strength"
+        formula: "[value * 0.1, 10].min"
+        tag: quality
+      listing_rating:
+        value: "context.listing.quality_rating"
+        formula: "[(value - 4.5) * 10, 0].max"
+        tag: feedback
+      profile_strength:
+        value: "context.user.profile_strength"
+        formula: "[value * 0.1, 10].min"
         tag: quality
       recommendations:
-        value: "context.user.recommendations.count"
+        value: "context.user.recommendations_count"
         formula: "[value, 3].min"
-        tag: retention
-      reviews:
-        value: "context.user.reviews.count"
+        tag: quality
+      compliments:
+        value: "context.user.compliments_count"
+        formula: "[value, 5].min"
+        tag: feedback
+      likes:
+        value: "context.user.likes_received_count"
+        formula: "[value * 0.25, 10].min"
+        tag: feedback
+      recruits_count:
+        value: "context.user.recruits_count"
+        formula: "[value, 5].min"
+        tag: engagement
+      inquiries_sent_count:
+        value: "context.user.inquiries_sent_count"
         formula: "[value, 3].min"
-        tag: retention
+        tag: engagement
+      deals_count:
+        value: "context.user.deals_count"
+        formula: "[value, 3].min"
+        tag: engagement
+      response_rate:
+        value: "context.user.response_rate"
+        formula: "[value - 70, 0].max / 5"
+        tag: engagement
+      services_count:
+        value: "[context.user.services_count - 1, 0].max"
+        formula: "[value, 4].min"
+        tag: engagement
+      has_app:
+        value: "context.user.has_app"
+        formula: "value"
+        tag: engagement
+      manifesto_shared:
+        value: "context.user.manifesto_shared"
+        formula: "value"
+        tag: engagement
+      service_shared:
+        value: "context.user.service_shared"
+        formula: "value"
+        tag: engagement
+      facebook_liked:
+        value: "context.user.facebook_liked"
+        formula: "value"
+        tag: engagement
+      has_swipes_in_matching:
+        value: "context.user.has_swipes_in_matching"
+        formula: "value"
+        tag: engagement
+      posted_request:
+        value: "context.user.posted_request"
+        formula: "value * 3"
+        tag: engagement
+      marketeer:
+        value: "context.user.completed_order"
+        formula: "value * 3"
+        tag: engagement
     temporal:
       last_seen:
-        value: "Time.now.to_i - context.user.last_login_at.ago"
-        formula: "[1 - value * 0.005, 1 - value * 0.30 ].max"
+        value: "(Time.now.to_date - context.user.last_seen).to_i"
+        formula: "[value * 0.005, 0.3].min"
+        tag: recency
+      last_message_sent:
+        value: "(Time.now.to_date - context.user.last_message_sent).to_i/7"
+        formula: "[-[value * 0.005, 0.3].min, 0].min.abs"
+        tag: recency
+      last_listing_created:
+        value: "(Time.now.to_date - context.user.last_listing_created).to_i/7"
+        formula: "[-[value * 0.001, 0.1].min, 0].min.abs"
         tag: recency
 v1: &v1
   <<: *default
