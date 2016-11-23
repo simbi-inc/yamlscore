@@ -26,22 +26,31 @@ module YamlScore
         expect(evaluated.factors.additive.response_rate.result).to eq(4)
         expect(evaluated.factors.temporal.last_seen.result).to eq(0.03)
       end
-    end
 
-    describe 'calculation should work correctly', focus: true do
       context 'with broken yml' do
         let(:formulas) { Hashie::Mash.new(::YAML.load(File.read('spec/fixtures/user_score.yml'))['broken']) }
 
         it 'should handle errors' do
           evaluated = YamlScore::Evaluator.new(formulas).evaluate(ctx)
-          p evaluated
+          expect(evaluated).to eq nil
+        end
+      end
+    end
+
+    describe 'calculation should work correctly' do
+      let(:evaluated) { YamlScore::Evaluator.new(formulas).evaluate(ctx) }
+      let(:ctx) { Context.sample }
+
+      context 'with broken yml' do
+        let(:formulas) { Hashie::Mash.new(::YAML.load(File.read('spec/fixtures/user_score.yml'))['broken']) }
+
+        it 'should handle errors' do
+          result = YamlScore::Calculator.new(evaluated).result
+          expect(result).to eq nil
         end
       end
 
       describe 'with correct yml' do
-        let(:evaluated) { YamlScore::Evaluator.new(formulas).evaluate(ctx) }
-        let(:ctx) { Context.sample }
-
         subject { YamlScore::Calculator.new(evaluated).result.round(2) }
 
         context 'with score' do

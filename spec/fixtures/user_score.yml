@@ -4,15 +4,15 @@ default: &default
     additive:
       listing_strength:
         value: "context.listing.strength"
-        formula: "[value * 0.1, 10].min"
+        formula: "[value * 0.1, 10].min.to_i"
         tag: quality
       listing_rating:
         value: "context.listing.quality_rating"
-        formula: "[(value - 4.5) * 10, 0].max"
+        formula: "[(value - 4.5) * 10, 0].max.to_i"
         tag: feedback
       profile_strength:
         value: "context.user.profile_strength"
-        formula: "[value * 0.1, 10].min"
+        formula: "[value * 0.1, 10].min.to_i"
         tag: quality
       recommendations:
         value: "context.user.recommendations_count"
