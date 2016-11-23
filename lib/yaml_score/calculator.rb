@@ -24,7 +24,9 @@ module YamlScore
 
       eval(evaluated.formula)
     rescue => e
-      puts e.message
+      {
+        errors: e
+      }
     end
   end
 end

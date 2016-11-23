@@ -31,8 +31,8 @@ module YamlScore
         let(:formulas) { Hashie::Mash.new(::YAML.load(File.read('spec/fixtures/user_score.yml'))['broken']) }
 
         it 'should handle errors' do
-          evaluated = YamlScore::Evaluator.new(formulas).evaluate(ctx)
-          expect(evaluated).to eq nil
+          result = YamlScore::Evaluator.new(formulas).evaluate(ctx)
+          expect(result[:errors]).not_to eq nil
         end
       end
     end
@@ -46,7 +46,7 @@ module YamlScore
 
         it 'should handle errors' do
           result = YamlScore::Calculator.new(evaluated).result
-          expect(result).to eq nil
+          expect(result[:errors]).not_to eq nil
         end
       end
 

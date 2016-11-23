@@ -14,7 +14,9 @@ module YamlScore
         end
       end
     rescue => e
-      puts e.message
+      {
+        errors: e
+      }
     end
   end
 end
