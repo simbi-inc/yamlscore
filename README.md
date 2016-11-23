@@ -1,3 +1,8 @@
+[![Build Status](https://travis-ci.com/simbi-inc/yamlscore.svg?token=NB4h8vmPKru2tx5DjD9n&branch=development)](https://travis-ci.com/simbi-inc/yamlscore)
+[![Code Climate](https://codeclimate.com/repos/5834a7e87f78370e3e0007ce/badges/4c0a29ee3f1186eb08e8/gpa.svg)](https://codeclimate.com/repos/5834a7e87f78370e3e0007ce/feed)
+[![Test Coverage](https://codeclimate.com/repos/5834a7e87f78370e3e0007ce/badges/4c0a29ee3f1186eb08e8/coverage.svg)](https://codeclimate.com/repos/5834a7e87f78370e3e0007ce/coverage)
+[![Issue Count](https://codeclimate.com/repos/5834a7e87f78370e3e0007ce/badges/4c0a29ee3f1186eb08e8/issue_count.svg)](https://codeclimate.com/repos/5834a7e87f78370e3e0007ce/feed)
+
 # YamlScore
 
 Calculate a score based on YAML rules and formulas.
