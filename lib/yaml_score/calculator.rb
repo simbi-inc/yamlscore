@@ -22,7 +22,9 @@ module YamlScore
         end
       end
 
-      eval(evaluated.formula)
+      {
+        value: eval(evaluated.formula)
+      }
     rescue => e
       {
         errors: e

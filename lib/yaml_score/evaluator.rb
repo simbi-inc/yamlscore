@@ -13,6 +13,10 @@ module YamlScore
           v.result = eval(v.formula)
         end
       end
+
+      {
+        result: hash
+      }
     rescue => e
       {
         errors: e

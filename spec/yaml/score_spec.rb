@@ -20,11 +20,11 @@ module YamlScore
 
     describe 'evaluation should work correctly' do
       it 'should have the result' do
-        expect(evaluated.factors.additive.profile_strength.result).to eq(10)
-        expect(evaluated.factors.additive.recommendations.result).to eq(2)
-        expect(evaluated.factors.additive.listing_rating.result).to eq(2)
-        expect(evaluated.factors.additive.response_rate.result).to eq(4)
-        expect(evaluated.factors.temporal.last_seen.result).to eq(0.03)
+        expect(evaluated[:result].factors.additive.profile_strength.result).to eq(10)
+        expect(evaluated[:result].factors.additive.recommendations.result).to eq(2)
+        expect(evaluated[:result].factors.additive.listing_rating.result).to eq(2)
+        expect(evaluated[:result].factors.additive.response_rate.result).to eq(4)
+        expect(evaluated[:result].factors.temporal.last_seen.result).to eq(0.03)
       end
 
       context 'with broken yml' do
@@ -38,7 +38,7 @@ module YamlScore
     end
 
     describe 'calculation should work correctly' do
-      let(:evaluated) { YamlScore::Evaluator.new(formulas).evaluate(ctx) }
+      let(:evaluated) { YamlScore::Evaluator.new(formulas).evaluate(ctx)[:result] }
       let(:ctx) { Context.sample }
 
       context 'with broken yml' do
@@ -51,7 +51,7 @@ module YamlScore
       end
 
       describe 'with correct yml' do
-        subject { YamlScore::Calculator.new(evaluated).result.round(2) }
+        subject { YamlScore::Calculator.new(evaluated).result[:value].round(2) }
 
         context 'with score' do
           it { is_expected.to eq(54 * 0.965) }
