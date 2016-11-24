@@ -76,15 +76,15 @@ default: &default
         tag: engagement
     temporal:
       last_seen:
-        value: "(Time.zone.today - context.user.last_seen).to_i"
+        value: "(Time.now.to_date - context.user.last_seen).to_i"
         formula: "[value * 0.005, 0.3].min"
         tag: recency
       last_message_sent:
-        value: "(Time.zone.today - context.user.last_message_sent).to_i/7"
+        value: "(Time.now.to_date - context.user.last_message_sent).to_i/7"
         formula: "[-[value * 0.005, 0.3].min, 0].min.abs"
         tag: recency
       last_listing_created:
-        value: "(Time.zone.today - context.user.last_listing_created).to_i/7"
+        value: "(Time.now.to_date - context.user.last_listing_created).to_i/7"
         formula: "[-[value * 0.001, 0.1].min, 0].min.abs"
         tag: recency
 v1: &v1
