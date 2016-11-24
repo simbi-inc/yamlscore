@@ -4,7 +4,7 @@ default: &default
     additive:
       listing_strength:
         value: "context.listing.strength"
-        formula: "[value * 0.1, 10].min.to_i"
+        formula: "[value / 10, 10].min"
         tag: quality
       listing_rating:
         value: "context.listing.quality_rating"
@@ -12,7 +12,7 @@ default: &default
         tag: feedback
       profile_strength:
         value: "context.user.profile_strength"
-        formula: "[value * 0.1, 10].min.to_i"
+        formula: "[value / 10, 10].min"
         tag: quality
       recommendations:
         value: "context.user.recommendations_count"
@@ -76,15 +76,15 @@ default: &default
         tag: engagement
     temporal:
       last_seen:
-        value: "(Time.now.to_date - context.user.last_seen).to_i"
+        value: "(Time.zone.today - context.user.last_seen).to_i"
         formula: "[value * 0.005, 0.3].min"
         tag: recency
       last_message_sent:
-        value: "(Time.now.to_date - context.user.last_message_sent).to_i/7"
+        value: "(Time.zone.today - context.user.last_message_sent).to_i/7"
         formula: "[-[value * 0.005, 0.3].min, 0].min.abs"
         tag: recency
       last_listing_created:
-        value: "(Time.now.to_date - context.user.last_listing_created).to_i/7"
+        value: "(Time.zone.today - context.user.last_listing_created).to_i/7"
         formula: "[-[value * 0.001, 0.1].min, 0].min.abs"
         tag: recency
 v1: &v1
