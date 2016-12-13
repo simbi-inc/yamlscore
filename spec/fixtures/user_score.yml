@@ -24,7 +24,7 @@ default: &default
         tag: feedback
       likes:
         value: "context.user.likes_received_count"
-        formula: "[value * 0.5, 10].min"
+        formula: "[value * 0.25, 10].min"
         tag: feedback
       recruits_count:
         value: "context.user.recruits_count"
