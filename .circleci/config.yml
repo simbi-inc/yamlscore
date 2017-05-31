@@ -1,0 +1,33 @@
+version: 2
+jobs:
+  build:
+    working_directory: /home/circleci/simbi
+    docker:
+      - image: circleci/ruby:2.4.1
+    steps:
+      - checkout
+      - add_ssh_keys
+      - restore_cache:
+          key: yamlscore-{{ .Branch }}
+      - run:
+          name: 'Install gems'
+          command: |
+            bundle check --path /home/circleci/bundle &>/dev/null \
+              || bundle install --path /home/circleci/bundle --jobs 4 --retry 3
+      - save_cache:
+          key: yamlscore-{{ .Branch }}
+          paths:
+            - /home/circleci/bundle
+      - run: 'bundle exec rubocop'
+      - run:
+
+          name: 'Rspec'
+          command: |
+            bundle exec rspec spec \
+              --format progress \
+              --format RspecJunitFormatter -o /tmp/test-results/rspec.xml
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: tests
+      - store_test_results:
+          path: /tmp/test-results
