@@ -1,34 +1,35 @@
+# frozen_string_literal: true
+
 require 'active_support/core_ext/enumerable'
 
 module YamlScore
   # evaluator of main formula in yml
   class Calculator
-    attr_accessor :evaluated
-
     def initialize(evaluated_hash)
-      self.evaluated = evaluated_hash
+      @evaluated = evaluated_hash
     end
 
-    def result(context = nil)
-      factors = Hashie::Mash.new
+    def result(context = nil) # rubocop:disable Lint/UnusedMethodArgument
+      { value: eval(evaluated.formula) } # rubocop:disable Security/Eval
+    rescue => e
+      { errors: e }
+    end
 
-      evaluated.factors.each do |_k, v|
+    private
+
+    def evaluated
+      @evaluated.factors.each do |_k, v|
         v.each do |_key, val|
-          if factors[val[:tag]]
-            factors[val[:tag]] << val[:result]
-          else
-            factors[val[:tag]] = [val[:result]]
-          end
+          next factors[val[:tag]] << val[:result] if factors[val[:tag]]
+          factors[val[:tag]] = [val[:result]]
         end
       end
 
-      {
-        value: eval(evaluated.formula)
-      }
-    rescue => e
-      {
-        errors: e
-      }
+      @evaluated
+    end
+
+    def factors
+      @factors ||= Hashie::Mash.new
     end
   end
 end

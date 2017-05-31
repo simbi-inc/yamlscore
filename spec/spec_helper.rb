@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 require 'simplecov'
 SimpleCov.start
 
 require 'yaml_score'
 require 'hashie'
+require 'pry'
 
 RSpec.configure do |config|
   config.filter_run(focus: true)
@@ -27,7 +30,7 @@ class Context < Hashie::Mash
       end
     end
 
-    def sample_hash
+    def sample_hash # rubocop:disable Metrics/MethodLength
       {
         user: {
           profile_strength: 100, # expect 10
@@ -57,7 +60,7 @@ class Context < Hashie::Mash
       }
     end
 
-    def max_score_sample
+    def max_score_sample # rubocop:disable Metrics/MethodLength
       {
         user: {
           profile_strength: 100, # expect 10

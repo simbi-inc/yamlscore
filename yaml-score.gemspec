@@ -1,4 +1,6 @@
+# frozen_string_literal: true
 # coding: utf-8
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'yaml_score/version'
@@ -7,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.name = 'yamlscore'
   spec.version       = YamlScore::VERSION
   spec.authors       = ['Konstantin Gredeskoul', 'Artem Kozaev']
-  spec.email         = %w(kig@simbi.com artem@simbi.com)
+  spec.email         = %w[kig@simbi.com artem@simbi.com]
 
   spec.summary       = 'Calculate a score based on YAML rules and formulas'
   spec.description   = 'Calculate a score based on YAML rules and formulas'
@@ -21,11 +23,13 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'hashie'
-  spec.add_development_dependency 'simplecov', '~> 0.12'
-  spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0'
-  spec.add_development_dependency 'bundler', '~> 1.13'
-  spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'activesupport'
+  spec.add_development_dependency 'bundler', '~> 1.13'
+  spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0'
+  spec.add_development_dependency 'hashie'
+  spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'simplecov', '~> 0.12'
 end

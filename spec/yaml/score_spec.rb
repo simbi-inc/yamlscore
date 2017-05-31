@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'yaml'
 require 'hashie'
@@ -5,7 +7,8 @@ require 'hashie'
 module YamlScore
   describe 'YamlScore' do
     let(:ctx) { Context.sample }
-    let(:formulas) { Hashie::Mash.new(::YAML.load(File.read('spec/fixtures/user_score.yml'))['v1']) }
+    let(:yaml) { ::YAML.load(File.read('spec/fixtures/user_score.yml')) }
+    let(:formulas) { Hashie::Mash.new(yaml['v1']) }
     let(:evaluated) { YamlScore::Evaluator.new(formulas).evaluate(ctx) }
 
     it 'has a version number' do
@@ -19,16 +22,19 @@ module YamlScore
     end
 
     describe 'evaluation should work correctly' do
+      let(:factors) { evaluated[:result].factors }
+
       it 'should have the result' do
-        expect(evaluated[:result].factors.additive.profile_strength.result).to eq(10)
-        expect(evaluated[:result].factors.additive.recommendations.result).to eq(2)
-        expect(evaluated[:result].factors.additive.listing_rating.result).to eq(2)
-        expect(evaluated[:result].factors.additive.response_rate.result).to eq(4)
-        expect(evaluated[:result].factors.temporal.last_seen.result).to eq(0.03)
+        expect(factors.additive.profile_strength.result).to eq(10)
+        expect(factors.additive.recommendations.result).to eq(2)
+        expect(factors.additive.listing_rating.result).to eq(2)
+        expect(factors.additive.response_rate.result).to eq(4)
+        expect(factors.temporal.last_seen.result).to eq(0.03)
       end
 
       context 'with broken yml' do
-        let(:formulas) { Hashie::Mash.new(::YAML.load(File.read('spec/fixtures/user_score.yml'))['broken']) }
+        let(:yaml) { ::YAML.load(File.read('spec/fixtures/user_score.yml')) }
+        let(:formulas) { Hashie::Mash.new(yaml['broken']) }
 
         it 'should handle errors' do
           result = YamlScore::Evaluator.new(formulas).evaluate(ctx)
@@ -38,11 +44,13 @@ module YamlScore
     end
 
     describe 'calculation should work correctly' do
-      let(:evaluated) { YamlScore::Evaluator.new(formulas).evaluate(ctx)[:result] }
+      let(:evaluator) { YamlScore::Evaluator.new(formulas) }
+      let(:evaluated) { evaluator.evaluate(ctx)[:result] }
       let(:ctx) { Context.sample }
 
       context 'with broken yml' do
-        let(:formulas) { Hashie::Mash.new(::YAML.load(File.read('spec/fixtures/user_score.yml'))['broken']) }
+        let(:yaml) { ::YAML.load(File.read('spec/fixtures/user_score.yml')) }
+        let(:formulas) { Hashie::Mash.new(yaml['broken']) }
 
         it 'should handle errors' do
           result = YamlScore::Calculator.new(evaluated).result

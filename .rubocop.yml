@@ -1,0 +1,15 @@
+AllCops:
+  DisplayCopNames: true
+  TargetRubyVersion: 2.4
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Security/YAMLLoad:
+  Exclude:
+    - 'spec/**/*'
+
+Style/Documentation:
+  Enabled: false
+
