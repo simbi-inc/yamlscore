@@ -16,7 +16,7 @@ module YamlScore
     end
 
     describe 'context should have members accessible as methods' do
-      it 'should be accessible via context' do
+      it 'is be accessible via context' do
         expect(ctx.user.profile_strength).to eq(100)
       end
     end
@@ -24,7 +24,7 @@ module YamlScore
     describe 'evaluation should work correctly' do
       let(:factors) { evaluated[:result].factors }
 
-      it 'should have the result' do
+      it 'has the result' do
         expect(factors.additive.profile_strength.result).to eq(10)
         expect(factors.additive.recommendations.result).to eq(2)
         expect(factors.additive.listing_rating.result).to eq(2)
@@ -36,7 +36,7 @@ module YamlScore
         let(:yaml) { ::YAML.load(File.read('spec/fixtures/user_score.yml')) }
         let(:formulas) { Hashie::Mash.new(yaml['broken']) }
 
-        it 'should handle errors' do
+        it 'handles errors' do
           result = YamlScore::Evaluator.new(formulas).evaluate(ctx)
           expect(result[:errors]).not_to eq nil
         end
@@ -52,7 +52,7 @@ module YamlScore
         let(:yaml) { ::YAML.load(File.read('spec/fixtures/user_score.yml')) }
         let(:formulas) { Hashie::Mash.new(yaml['broken']) }
 
-        it 'should handle errors' do
+        it 'handles errors' do
           result = YamlScore::Calculator.new(evaluated).result
           expect(result[:errors]).not_to eq nil
         end
@@ -67,6 +67,7 @@ module YamlScore
 
         context 'with max score' do
           let(:ctx) { Context.sample(score: :max) }
+
           it { is_expected.to eq(75) }
         end
 

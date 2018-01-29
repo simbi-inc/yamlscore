@@ -30,7 +30,8 @@ class Context < Hashie::Mash
       end
     end
 
-    def sample_hash # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength
+    def sample_hash
       {
         user: {
           profile_strength: 100, # expect 10
@@ -60,7 +61,7 @@ class Context < Hashie::Mash
       }
     end
 
-    def max_score_sample # rubocop:disable Metrics/MethodLength
+    def max_score_sample
       {
         user: {
           profile_strength: 100, # expect 10
@@ -89,5 +90,6 @@ class Context < Hashie::Mash
         }
       }
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

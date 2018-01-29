@@ -11,15 +11,15 @@ module YamlScore
 
     def result(context = nil) # rubocop:disable Lint/UnusedMethodArgument
       { value: eval(evaluated.formula) } # rubocop:disable Security/Eval
-    rescue => e
+    rescue StandardError => e
       { errors: e }
     end
 
     private
 
     def evaluated
-      @evaluated.factors.each do |_k, v|
-        v.each do |_key, val|
+      @evaluated.factors.each_value do |v|
+        v.each_value do |val|
           next factors[val[:tag]] << val[:result] if factors[val[:tag]]
           factors[val[:tag]] = [val[:result]]
         end
