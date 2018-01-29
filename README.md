@@ -1,7 +1,6 @@
 [![CircleCI](https://circleci.com/gh/simbi-inc/yamlscore.svg?style=svg)](https://circleci.com/gh/simbi-inc/yamlscore)
-[![Code Climate](https://codeclimate.com/repos/5834a7e87f78370e3e0007ce/badges/4c0a29ee3f1186eb08e8/gpa.svg)](https://codeclimate.com/repos/5834a7e87f78370e3e0007ce/feed)
-[![Test Coverage](https://codeclimate.com/repos/5834a7e87f78370e3e0007ce/badges/4c0a29ee3f1186eb08e8/coverage.svg)](https://codeclimate.com/repos/5834a7e87f78370e3e0007ce/coverage)
-[![Issue Count](https://codeclimate.com/repos/5834a7e87f78370e3e0007ce/badges/4c0a29ee3f1186eb08e8/issue_count.svg)](https://codeclimate.com/repos/5834a7e87f78370e3e0007ce/feed)
+[![Maintainability](https://api.codeclimate.com/v1/badges/829757f83c7205a986d0/maintainability)](https://codeclimate.com/github/simbi-inc/yamlscore/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/829757f83c7205a986d0/test_coverage)](https://codeclimate.com/github/simbi-inc/yamlscore/test_coverage)
 
 # YamlScore
 
